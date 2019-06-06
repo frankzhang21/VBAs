@@ -1,0 +1,40 @@
+Sub Main()
+    Application.ScreenUpdating = False
+    Application.DisplayAlerts = False
+    Dim fd As FileDialog
+    Set fd = Application.FileDialog(msoFileDialogFilePicker)
+    Dim vrtSelectedItem As Variant
+    Dim main_book As Variant
+    Dim arr
+    Dim end_row, end_col
+    Dim k
+    k = 0
+    Set main_book = Workbooks.Add.Sheets(1)
+    main_book.Columns("a:cc").NumberFormat = "@"
+    With fd
+        .AllowMultiSelect = True
+        If .Show = -1 Then
+            t = Timer
+            For Each vrtSelectedItem In .SelectedItems
+                Set wb = Application.Workbooks.Open(vrtSelectedItem)
+                end_row = wb.Sheets(1).Cells(Rows.Count, 1).End(3).Row
+                end_col = wb.Sheets(1).Range("iv1").End(xlToLeft).Column
+                If main_book.Range("a1") <> "" Then
+                    arr = wb.Sheets(1).Range(Cells(2, 1), Cells(end_row, end_col))
+                    main_book.Range("a1048576").End(3).Offset(1, 0).Resize(UBound(arr, 1), UBound(arr, 2)) = arr
+                Else
+                    arr = wb.Sheets(1).Range(Cells(1, 1), Cells(end_row, end_col))
+                    main_book.Range("a1").Resize(UBound(arr, 1), UBound(arr, 2)) = arr
+                End If
+                wb.Close False
+                k = k + 1
+            Next
+        Else
+        End If
+    End With
+    Set fd = Nothing
+    Application.ScreenUpdating = True
+    Application.DisplayAlerts = True
+    MsgBox k & " files are combined within  " & Timer - t & " seconds"
+
+End Sub
