@@ -1,0 +1,27 @@
+' Add "Microsoft VBScript Regular Expressions 5.5"
+Function RegxReplace(strInput As String, regexPattern As String, Optional ByVal position As Integer = 1, Optional extract As Boolean = False, Optional sub_position As Integer = 1) As String
+    Dim regEx As New RegExp
+    With regEx
+        .Global = True
+        .MultiLine = True
+        .IgnoreCase = False
+        .Pattern = regexPattern
+    End With
+    If extract = Flase Then
+            If regEx.Test(strInput) Then
+            Set matches = regEx.Execute(strInput)
+            replacement = ""
+            RegxReplace = regEx.Replace(strInput, replacement)
+            Else
+            RegxReplace = "not matched"
+            End If
+    Else
+        If regEx.Test(strInput) Then
+        Set matches = regEx.Execute(strInput)
+        replacement = matches(0).SubMatches(0)
+        RegxReplace = regEx.Replace(strInput, replacement)
+        Else
+        RegxReplace = "not matched"
+        End If
+    End If
+End Function
