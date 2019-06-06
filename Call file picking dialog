@@ -1,0 +1,29 @@
+Sub Main()
+    Application.ScreenUpdating = False
+    Application.DisplayAlerts = False
+    Dim fd As FileDialog
+    Set fd = Application.FileDialog(msoFileDialogFilePicker)
+    Dim vrtSelectedItem As Variant
+    Dim main_book As Variant
+    Dim arr
+    Dim end_row, end_col
+    Dim k
+    k = 0
+    Set main_book = Workbooks.Add.Sheets(1)
+    main_book.Columns("a:cc").NumberFormat = "@"
+    With fd
+        .AllowMultiSelect = True
+        If .Show = -1 Then
+            t = Timer
+            For Each vrtSelectedItem In .SelectedItems
+                ''Things to do
+            Next
+        Else
+        End If
+    End With
+    Set fd = Nothing
+    Application.ScreenUpdating = True
+    Application.DisplayAlerts = True
+    MsgBox k & " files are combined within  " & Timer - t & " seconds"
+
+End Sub
