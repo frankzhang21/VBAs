@@ -8,8 +8,8 @@ xlWbk <- xlApp$Workbooks()$Open("C:\\Users\\fzhang\\OneDrive - Travelzoo\\ceshi.
 # its ok to run macro without visible excel application
 xlApp[['Visible']] <- TRUE 
 
-# Run the macro called "MyMacro":
-xlApp$Run("test")
+# Run the macro called "MyMacro": and Pass 100 as argument
+xlApp$Run("test",25,40)
 
 # Close the workbook and quit the app:
 xlWbk$Close(FALSE)# not save
